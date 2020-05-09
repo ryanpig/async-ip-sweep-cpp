@@ -1,19 +1,18 @@
-## async ping 
-1. use `popen` and `WEXITSTATUS(pclose(pipe))` to get exit code
-2. use future array  and  `valid()` to check avaialbe future
-```
-   vecFutures.push_back(std::async(std::launch::async, &exec, cmds[i].c_str()));
-    if(vecFutures[i].valid()) {
-```
+## Description
+Inspired by Python `asyncio`, `async-ip-sweep-cpp` can also take advantage of asynchronous calls by C++ `async` w/ command-line `ping` command, which achieves high concurrency to scan all avaiable ip addresses in the subnet. The performance is similar to `nmap` that scan the same ip range by sending ICMP requests. Adding hostname resolution of reachable IPs, however, makes this tool much useful as it only uses the third of execution time than nmap.
 
-3. Future doesn't have to be moved. (automatic move?) 
+## Usage
+`make && ./async-ip-sweep-cpp` (w/ hostname resolution) 
+`make && ./async-ip-sweep-cpp -n` (w/o hostname resolution)
+Note: change subnet in the cpp file
 
-## Future improvement
-- allow dynamic number of ips instead of a fixed number of address defined 
-- A result vector includes <cmd, result> instead of only result.(How: store a pair type before running). e.g. Struct task { command, future, answered, result }
-Note: ownership of future needs to be moved [move future or share](https://stackoverflow.com/questions/27186233/stdfuture-as-a-parameter-to-a-function-c)
+## Performance
+##### async-ip-sweep-cpp
+Condition: 35 avaiable IP addresses of 254 IP addresses 
+- w/o hostname resolution: 1.17 seconds
+- w/ hostname resolution: 1.26 seconds
 
-
-## final performance
-- ping 254 ip address: 1.2 seconds
+##### nmap 
+- w/o hostname resolution: 1.21 seconds (`sudo nmap -sn -PE <ip range>`)
+- w/ hostname resolution: 3.34 seconds (`sudo nmap -n -sn -PE <ip range>`)
 
