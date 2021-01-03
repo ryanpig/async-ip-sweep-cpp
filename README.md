@@ -16,3 +16,5 @@ Condition: 35 avaiable IP addresses of 254 IP addresses
 - w/o hostname resolution: 1.21 seconds (`sudo nmap -sn -PE <ip range>`)
 - w/ hostname resolution: 3.34 seconds (`sudo nmap -n -sn -PE <ip range>`)
 
+## LICENCE
+MIT LICENCE
